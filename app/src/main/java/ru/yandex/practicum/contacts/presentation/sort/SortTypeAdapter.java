@@ -17,9 +17,14 @@ import java.util.function.Consumer;
 
 import ru.yandex.practicum.contacts.R;
 import ru.yandex.practicum.contacts.databinding.ItemSortBinding;
+import ru.yandex.practicum.contacts.presentation.base.ListDiffInterface;
+import ru.yandex.practicum.contacts.presentation.filter.model.FilterContactTypeUi;
 import ru.yandex.practicum.contacts.presentation.sort.model.SortType;
 
-public class SortTypeAdapter extends RecyclerView.Adapter<SortTypeAdapter.ViewHolder> {
+import ru.yandex.practicum.contacts.presentation.base.ListDiffInterface;
+import ru.yandex.practicum.contacts.presentation.sort.SortTypeUI;
+
+public class SortTypeAdapter extends RecyclerView.Adapter<SortTypeAdapter.ViewHolder> implements ListDiffInterface<SortTypeUI> {
 
     private final AsyncListDiffer<SortTypeUI> differ = new AsyncListDiffer<>(
             new AdapterListUpdateCallback(this),
@@ -27,6 +32,13 @@ public class SortTypeAdapter extends RecyclerView.Adapter<SortTypeAdapter.ViewHo
     );
 
     private final Consumer<SortTypeUI> clickListener;
+
+    @Override
+    public boolean theSameAs(SortTypeUI sortTypeUI)
+    {
+        return sortTypeUI.getSortType() == sortTypeUI.getSortType();
+    }
+
 
     public SortTypeAdapter(Consumer<SortTypeUI> clickListener) {
         this.clickListener = clickListener;
